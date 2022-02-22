@@ -1,8 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { WsProvider } from "@polkadot/api";
+import { ethers } from "ethers";
+import { SignerProvider } from "@acala-network/eth-providers";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
+  const [_provider, setProvider] = useState<SignerProvider | null>(null);
+
+  useEffect(() => {
+    const wsProvider = new WsProvider("wss://mandala.polkawallet.io");
+    const bodhiProvider = new SignerProvider({ provider: wsProvider });
+    setProvider(bodhiProvider);
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
